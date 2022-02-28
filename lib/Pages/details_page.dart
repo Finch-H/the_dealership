@@ -42,9 +42,10 @@ class DetailsPage extends StatefulWidget {
   @override
   _DetailsPageState createState() => _DetailsPageState();
 }
-CollectionReference _NewVehicles = FirebaseFirestore.instance.collection('NewVehicles');
 
 class _DetailsPageState extends State<DetailsPage> {
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //check the size of device
