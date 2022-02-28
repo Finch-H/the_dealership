@@ -85,9 +85,9 @@ void getNewVehicles() async {
   Region=doc['Region'];
   Price=doc['Price'];
   Condition= doc['Condition'];
-  carPower= doc[''];
-  carClass= doc[''];
-  Seater=doc[''];
-  Airbags=doc[''];
+  carPower= doc['CarPower'];
+  carClass= doc['CarClass'];
+  Seater=doc['CarSeater'];
+  Airbags=doc['CarAirbag'];
   // add = doc['address1'] + '' + doc['address2'] + '' + doc['address3'];
 }
