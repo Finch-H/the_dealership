@@ -24,6 +24,12 @@ class addvehicle extends StatefulWidget {
 
 class _addvehicleState extends State<addvehicle> {
 
+
+  User? user = FirebaseAuth.instance.currentUser;
+  String get name => user!.displayName.toString();
+  String? get email => user!.email.toString();
+
+
   String? _VehicledropDownValue;
   String? _RegiondropDownValue;
   String? _ConditiondropDownValue;
@@ -369,7 +375,7 @@ class _addvehicleState extends State<addvehicle> {
 
 
        TextFormField(
-          decoration: const InputDecoration(hintText: ("Name"),
+          decoration: const InputDecoration(hintText: ("s"),
               border: OutlineInputBorder()),
           validator: (val) => val!.isEmpty ? 'Enter your Name' : null,
           onChanged: (val) {

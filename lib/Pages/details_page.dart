@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
 class DetailsPage extends StatefulWidget {
+
+
+
+
   final String carImage;
   final String carClass;
   final String carName;
@@ -15,6 +21,10 @@ class DetailsPage extends StatefulWidget {
   final int carPrice;
   final String carRating;
   final bool isRotated;
+
+
+
+
 
   const DetailsPage({
     Key? key,
@@ -32,6 +42,7 @@ class DetailsPage extends StatefulWidget {
   @override
   _DetailsPageState createState() => _DetailsPageState();
 }
+CollectionReference _NewVehicles = FirebaseFirestore.instance.collection('NewVehicles');
 
 class _DetailsPageState extends State<DetailsPage> {
   @override
