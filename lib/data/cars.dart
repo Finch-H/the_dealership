@@ -14,7 +14,7 @@ final user = FirebaseAuth.instance.currentUser;
 String? cusName;
 String? add;
 String? Color;
-String?   Seater ;
+String? Seater ;
 String? carClass;
 String? Condition;
 String? Description;
@@ -27,9 +27,10 @@ String? Vin;
 String? carPower;
 String? CarRating;
 String? Category;
+String? Airbags;
 
 CollectionReference _NewVehicles = FirebaseFirestore.instance.collection('NewVehicles');
-Future<void> initializeOrder(BuildContext ctx) async {
+
   List<Map> cars = [
     {
       'carName': 'Hyundai i30 N 2021',
@@ -66,7 +67,7 @@ Future<void> initializeOrder(BuildContext ctx) async {
       'carRating': '4.8',
     }
   ];
-}
+
 void getNewVehicles() async {
   final doc = await FirebaseFirestore.instance
       .collection('NewVehicles')
@@ -86,5 +87,7 @@ void getNewVehicles() async {
   Condition= doc['Condition'];
   carPower= doc[''];
   carClass= doc[''];
+  Seater=doc[''];
+  Airbags=doc[''];
   // add = doc['address1'] + '' + doc['address2'] + '' + doc['address3'];
 }
