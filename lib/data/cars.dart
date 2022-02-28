@@ -73,8 +73,18 @@ void getNewVehicles() async {
       .doc(user!.uid)
       .get();
 
-  cusName = doc['name'];
+  cusName = doc['Name'];
   Color= doc['Color'];
-  Description= doc['Description']
+  Description= doc['Description'];
+  Make = doc['Make'];
+  Region=doc['Region'];
+  Transmission=doc['Transmission'];
+  Vin=doc['Vin'];
+  Category=doc['Vehicle Category'];
+  Region=doc['Region'];
+  Price=doc['Price'];
+  Condition= doc['Condition'];
+  carPower= doc[''];
+  carClass= doc[''];
   // add = doc['address1'] + '' + doc['address2'] + '' + doc['address3'];
 }
