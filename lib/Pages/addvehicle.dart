@@ -497,6 +497,7 @@ class _addvehicleState extends State<addvehicle> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
+
                               AddVehiclestofirestore(context);
                               Navigator.pop(context);
                             }),
@@ -517,8 +518,8 @@ class _addvehicleState extends State<addvehicle> {
 
   Future<void> AddVehiclestofirestore(BuildContext context) async {
     User? user = await FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await FirebaseFirestore.instance.collection('NewVehicles').doc(make).set({
+    if (_VehicledropDownValue  != 'Rental') {
+      await FirebaseFirestore.instance.collection('Fleets').doc(make).set({
         'Vehicle Category': _VehicledropDownValue,
         'Region': _RegiondropDownValue,
         'Make': make,
@@ -542,6 +543,28 @@ class _addvehicleState extends State<addvehicle> {
       //     return SignInScreen();
       //   }),
       //);
+
+    }
+    else if(_VehicledropDownValue !='Fleet'){
+
+      await FirebaseFirestore.instance.collection('Rental').doc(make+name).set({
+        'Vehicle Category': _VehicledropDownValue,
+        'Region': _RegiondropDownValue,
+        'Make': make,
+        'Color': Color,
+        'Condition': _ConditiondropDownValue,
+        'Transmission': _TransmissiondropDownValue,
+        'Mileage': Milleage,
+        'VIN': VIN,
+        'Name': Name,
+        'Price': Price,
+        'Description': Description,
+        'CarPower':carPower,
+        'CarClass':carClass,
+        'CarSeater':Seater,
+        'CarAirbag':Airbags,
+
+      });
 
     }
   }
