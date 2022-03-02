@@ -89,51 +89,74 @@ return  Scaffold(
                             final DocumentSnapshot documentSnapshot =
                             streamSnapshot.data!.docs[index];
                             return SizedBox(
-                              height: 150,
-                              child: Card(
-                                color: Colors.white54,
-                                child: Column(
-                                  children: [
+                              height: 180,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Card(
+                                  color: Colors.white54,
+                                  child: Column(
+                                    children: [
 
 
-                                  Container(
-                                      child: Row(
+                                    Container(
+                                        child: Row(
 
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/yaris.png',
-                                                width: 200.0,
-                                                height: 120.0,
-                                                fit: BoxFit.cover),
-                                          ),
-                                          Column(
-                                              children: [
-                                             Text(
-                                              documents[index].get('Make'),
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Image.asset('assets/images/yaris.png',
+                                                  width: 200.0,
+                                                  height: 120.0,
+                                                  ),
+                                            ),
+                                            Column(
+                                                children: [
+                                               Text(
+                                                documents[index].get('Make'),
+                                                style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+
+                                                  Text(
+                                                    documents[index].get('Condition'),
+                                                    style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+
+                                                ]
                                             ),
 
-                                                Text(
-                                                  documents[index].get('Model'),
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                  children: [
+                                                    Text(
+                                                      documents[index].get('CarSeater'),
+                                                      style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.bold),
+                                                    ),
 
-                                              ]
-                                          ),
+                                                    Text(
+                                                      documents[index].get('Color'),
+                                                      style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.bold),
+                                                    ),
+
+                                                  ]
+                                              ),
+                                            ),
+                                ],
+                                        )
 
 
-                              ],
-                                      )
+                                      ),
 
-
-                                    ),
-
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
