@@ -38,6 +38,7 @@ class _addvehicleState extends State<addvehicle> {
   String error = '';
   bool loading = false;
   String make = '';
+  String model='';
   String Color = '';
   String Milleage = '';
   String VIN = '';
@@ -212,6 +213,8 @@ class _addvehicleState extends State<addvehicle> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+
+                        //Region
                         SizedBox(height: 10.0),
 
                         Padding(
@@ -254,6 +257,8 @@ class _addvehicleState extends State<addvehicle> {
                             },
                           ),
                         ),
+
+                        //Make
                         SizedBox(height: 20.0),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -265,6 +270,23 @@ class _addvehicleState extends State<addvehicle> {
                                 val!.isEmpty ? 'Enter your Make' : null,
                             onChanged: (val) {
                               setState(() => make = val);
+                            },
+                          ),
+                        ),
+
+
+                        //Model
+                        SizedBox(height: 20.0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                hintText: 'Model*',
+                                border: OutlineInputBorder()),
+                            validator: (val) =>
+                            val!.isEmpty ? 'Enter your Model' : null,
+                            onChanged: (val) {
+                              setState(() => model = val);
                             },
                           ),
                         ),
@@ -519,10 +541,11 @@ class _addvehicleState extends State<addvehicle> {
   Future<void> AddVehiclestofirestore(BuildContext context) async {
     User? user = await FirebaseAuth.instance.currentUser;
     if (_VehicledropDownValue  != 'Rental') {
-      await FirebaseFirestore.instance.collection('Fleets').doc(make).set({
+      await FirebaseFirestore.instance.collection('Fleets').doc(make+model).set({
         'Vehicle Category': _VehicledropDownValue,
         'Region': _RegiondropDownValue,
         'Make': make,
+        'Model': model,
         'Color': Color,
         'Condition': _ConditiondropDownValue,
         'Transmission': _TransmissiondropDownValue,
@@ -535,6 +558,7 @@ class _addvehicleState extends State<addvehicle> {
         'CarClass':carClass,
         'CarSeater':Seater,
         'CarAirbag':Airbags,
+        //'ImageList':imageFileList,
 
       });
       // Navigator.push(
@@ -547,10 +571,11 @@ class _addvehicleState extends State<addvehicle> {
     }
     else if(_VehicledropDownValue !='Fleet'){
 
-      await FirebaseFirestore.instance.collection('Rental').doc(make+name).set({
+      await FirebaseFirestore.instance.collection('Rental').doc(make+model).set({
         'Vehicle Category': _VehicledropDownValue,
         'Region': _RegiondropDownValue,
         'Make': make,
+        'Model': model,
         'Color': Color,
         'Condition': _ConditiondropDownValue,
         'Transmission': _TransmissiondropDownValue,
