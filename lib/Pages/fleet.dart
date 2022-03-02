@@ -88,34 +88,53 @@ return  Scaffold(
                           itemBuilder: (context, index) {
                             final DocumentSnapshot documentSnapshot =
                             streamSnapshot.data!.docs[index];
-                            return Card(
-                              color: Colors.white54,
-                              child: Column(
-                                children: [
+                            return SizedBox(
+                              height: 150,
+                              child: Card(
+                                color: Colors.white54,
+                                child: Column(
+                                  children: [
+
+
                                   Container(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          documents[index].get('Make'),
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          documents[index].get('Make'),
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                      child: Row(
+
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Image.asset('assets/images/yaris.png',
+                                                width: 200.0,
+                                                height: 120.0,
+                                                fit: BoxFit.cover),
+                                          ),
+                                          Column(
+                                              children: [
+                                             Text(
+                                              documents[index].get('Make'),
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+
+                                                Text(
+                                                  documents[index].get('Model'),
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+
+                                              ]
+                                          ),
 
 
-                                      ],
-                                    )
+                              ],
+                                      )
 
 
-                                  ),
+                                    ),
 
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           });
