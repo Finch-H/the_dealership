@@ -7,8 +7,10 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:the_dealership/allUsers.dart';
-import 'package:the_dealership/configMaps.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 
 class addvehicle extends StatefulWidget {
   const addvehicle({Key? key}) : super(key: key);
@@ -18,6 +20,9 @@ class addvehicle extends StatefulWidget {
   _addvehicleState createState() => _addvehicleState();
 }
 
+
+final ImagePicker _picker = ImagePicker();
+File? _photo;
 class _addvehicleState extends State<addvehicle> {
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -29,6 +34,9 @@ class _addvehicleState extends State<addvehicle> {
   String? _RegiondropDownValue;
   String? _ConditiondropDownValue;
   String? _TransmissiondropDownValue;
+
+
+
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
@@ -593,4 +601,33 @@ class _addvehicleState extends State<addvehicle> {
 
     }
   }
+  Future imgFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future uploadFile() async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!);
+    } catch (e) {
+      print('error occured');
+    }
+  }
+
+
 }
