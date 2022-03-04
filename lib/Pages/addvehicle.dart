@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,7 +37,13 @@ class _addvehicleState extends State<addvehicle> {
   String? _TransmissiondropDownValue;
 
 
+  bool uploading = false;
+  double val = 0;
+  CollectionReference? imgRef;
+  firebase_storage.Reference? ref;
 
+  List<File> _image = [];
+  final picker = ImagePicker();
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
@@ -155,52 +162,80 @@ class _addvehicleState extends State<addvehicle> {
 
                 //Upload an Image
                 SizedBox(
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: GridView.builder(
-                            itemCount: imageFileList!.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3),
-                            itemBuilder: (BuildContext context, int index) {
-                              return Image.file(
-                                File(imageFileList![index].path),
-                                fit: BoxFit.cover,
-                              );
-                            }),
-                      ),
-                    ],
+                  height: 250,
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    child: GridView.builder(
+                        itemCount: _image.length + 1,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                        itemBuilder: (context, index) {
+                          return index == 0
+                              ? Center(
+                            child: IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () =>
+                                !uploading ? chooseImage() : null),
+                          )
+                              : Container(
+                            margin: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: FileImage(_image[index - 1]),
+                                    fit: BoxFit.cover)),
+                          );
+                        }),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
 
-                        onPressed: () {
-                          selectImages();
-                        },
-                        child: Text('Upload Images'),
-                          style: ElevatedButton.styleFrom(primary:Colors.black),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            selectImages();
-                          },
-                          child: Text('Delete'),
-                          style: ElevatedButton.styleFrom(primary:Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+               //multple Images
+                // SizedBox(
+                //   height: 70,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Expanded(
+                //         child: GridView.builder(
+                //             itemCount: imageFileList!.length,
+                //             gridDelegate:
+                //                 SliverGridDelegateWithFixedCrossAxisCount(
+                //                     crossAxisCount: 3),
+                //             itemBuilder: (BuildContext context, int index) {
+                //               return Image.file(
+                //                 File(imageFileList![index].path),
+                //                 fit: BoxFit.cover,
+                //               );
+                //             }),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       ElevatedButton(
+                //
+                //         onPressed: () {
+                //           selectImages();
+                //         },
+                //         child: Text('Upload Images'),
+                //           style: ElevatedButton.styleFrom(primary:Colors.black),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.all(8.0),
+                //         child: ElevatedButton(
+                //           onPressed: () {
+                //             selectImages();
+                //           },
+                //           child: Text('Delete'),
+                //           style: ElevatedButton.styleFrom(primary:Colors.black),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 100.0,
                   child: Padding(
@@ -208,6 +243,7 @@ class _addvehicleState extends State<addvehicle> {
                     child: Row(
                       children: [
                         Text(
+                          "Upload at least 5 pictures\n"
                           "Supported formats are jpg.png.gif\n"
                           "Each photo must not exceed 5mb",
                           style: TextStyle(color: Colors.grey),
@@ -527,9 +563,9 @@ class _addvehicleState extends State<addvehicle> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
+                              uploadFile();
+                                AddVehiclestofirestore(context)..whenComplete(() => Navigator.of(context).pop);
 
-                              AddVehiclestofirestore(context);
-                              Navigator.pop(context);
                             }),
                         SizedBox(height: 12.0),
                         Text(
@@ -547,6 +583,7 @@ class _addvehicleState extends State<addvehicle> {
   }
 
   Future<void> AddVehiclestofirestore(BuildContext context) async {
+
     User? user = await FirebaseAuth.instance.currentUser;
     if (_VehicledropDownValue  != 'Rental') {
       await FirebaseFirestore.instance.collection('Fleets').doc(make+model).set({
@@ -601,33 +638,47 @@ class _addvehicleState extends State<addvehicle> {
 
     }
   }
-  Future imgFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-
+  chooseImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        print('No image selected.');
-      }
+      _image.add(File(pickedFile!.path));
     });
+    if (pickedFile!.path == null) retrieveLostData();
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostData response = await picker.getLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        _image.add(File(response.file!.path));
+      });
+    } else {
+      print(response.file);
+    }
   }
 
   Future uploadFile() async {
-    if (_photo == null) return;
-    final fileName = basename(_photo!.path);
-    final destination = 'files/$fileName';
+    int i = 1;
 
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!);
-    } catch (e) {
-      print('error occured');
+    for (var img in _image) {
+      setState(() {
+        val = i / _image.length;
+      });
+      ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images/${basename(img.path)}');
+      await ref!.putFile(img).whenComplete(() async {
+        await ref!.getDownloadURL().then((value) {
+          imgRef!.add({'url': value});
+          i++;
+        });
+      });
     }
   }
+
 
 
 }

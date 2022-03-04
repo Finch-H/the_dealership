@@ -6,6 +6,7 @@ import 'package:the_dealership/Pages/addvehicle.dart';
 import 'package:the_dealership/Pages/forgotpassword.dart';
 import 'package:the_dealership/Pages/login.dart';
 import 'package:the_dealership/Pages/homepage.dart';
+import 'package:the_dealership/Pages/testimageupload.dart';
 import 'package:the_dealership/onboarding.dart';
 import 'package:the_dealership/Pages/signup.dart';
 import 'splash.dart';
@@ -63,7 +64,7 @@ class App extends StatelessWidget {
         OnBoardingPage.idScreen: (context) => OnBoardingPage(),
         ForgotPassword.id: (context) => ForgotPassword(),
         addvehicle.idScreen: (context) => addvehicle(),
-
+        //testimage.idScreen:(context)=>testimage(),
       },
     );
     throw UnimplementedError();
