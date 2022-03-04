@@ -563,8 +563,10 @@ class _addvehicleState extends State<addvehicle> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
-                              uploadFile();
-                                AddVehiclestofirestore(context)..whenComplete(() => Navigator.of(context).pop);
+
+                              Future.wait([uploadFile(),
+                              AddVehiclestofirestore(context)]);
+                                Navigator.pop(context);
 
                             }),
                         SizedBox(height: 12.0),
@@ -669,10 +671,10 @@ class _addvehicleState extends State<addvehicle> {
       });
       ref = firebase_storage.FirebaseStorage.instance
           .ref()
-          .child('images/${basename(img.path)}');
+          .child('$make$model/${basename(img.path)}');
       await ref!.putFile(img).whenComplete(() async {
         await ref!.getDownloadURL().then((value) {
-          imgRef!.add({'url': value});
+          imgRef?.add({'url': value});
           i++;
         });
       });
