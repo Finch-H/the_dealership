@@ -223,30 +223,7 @@ class _homepageState extends State<homepage>with TickerProviderStateMixin {
           // ),
           centerTitle: true,
           actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                right: size.width * 0.05,
-              ),
-              child: SizedBox(
-                height: size.width * 0.1,
-                width: size.width * 0.1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? const Color(0xff070606)
-                        : Colors.white, //icon bg color
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: Icon(
-                    UniconsLine.toggle_on,
-                    color: isDarkMode ? Colors.white : Colors.black,
-                    size: size.height * 0.025,
-                  ),
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
