@@ -7,10 +7,12 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:the_dealership/allUsers.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:the_dealership/assistants/progressdialog.dart';
 
 
 class addvehicle extends StatefulWidget {
@@ -564,9 +566,15 @@ class _addvehicleState extends State<addvehicle> {
                             ),
                             onPressed: () async {
 
-                              Future.wait([uploadFile(),
-                              AddVehiclestofirestore(context)]);
-                                Navigator.pop(context);
+
+
+
+                                  Future.wait([AddVehiclestofirestore(context),
+                                    uploadFile(),]);
+
+
+
+
 
                             }),
                         SizedBox(height: 12.0),
@@ -585,6 +593,21 @@ class _addvehicleState extends State<addvehicle> {
   }
 
   Future<void> AddVehiclestofirestore(BuildContext context) async {
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context)
+        {
+          return ProgressDialog(message: "Adding,Please wait.....",);
+
+        }
+
+
+    );
+
+
+
 
     User? user = await FirebaseAuth.instance.currentUser;
     if (_VehicledropDownValue  != 'Rental') {
@@ -637,6 +660,9 @@ class _addvehicleState extends State<addvehicle> {
         'CarAirbag':Airbags,
 
       });
+      displayToast("Congratulation, your vehicle has been added", context);
+      Navigator.pop(context);
+      Navigator.pop(context);
 
     }
   }
@@ -663,6 +689,8 @@ class _addvehicleState extends State<addvehicle> {
   }
 
   Future uploadFile() async {
+
+
     int i = 1;
 
     for (var img in _image) {
@@ -681,6 +709,10 @@ class _addvehicleState extends State<addvehicle> {
     }
   }
 
+  displayToast(String message,BuildContext context)
+  {
+    Fluttertoast.showToast(msg: message);
 
+  }
 
 }
