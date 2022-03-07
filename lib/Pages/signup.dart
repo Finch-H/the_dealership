@@ -291,7 +291,7 @@ class SignUP extends StatelessWidget {
       //   MaterialPageRoute(builder: (context) {
       //     return SignInScreen();
       //   }),
-      //);
+      // );
 
     }
   }
