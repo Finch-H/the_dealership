@@ -256,8 +256,9 @@ class SignUP extends StatelessWidget {
                               displayToast("Password must be atleast 6 Characters", context);
                             }
                             else  {
+                              //registerNewUser(context);
                               Future.wait([registerNewUser(context),
-                                registerinfirestore(context)]);
+                               registerinfirestore(context)]);
 
                             }
                           },
@@ -274,9 +275,8 @@ class SignUP extends StatelessWidget {
   }
 
   Future<void>registerinfirestore(BuildContext context)async{
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-        email: _email.trim(), password: _password.trim());
+    User? user = await FirebaseAuth.instance.currentUser;
+
     if (user != null) {
       await FirebaseFirestore.instance
           .collection('Users')
