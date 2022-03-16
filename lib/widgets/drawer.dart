@@ -12,13 +12,20 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+
+
   User? user = FirebaseAuth.instance.currentUser;
   String get name => user!.displayName.toString();
   String? get email => user!.email.toString();
   //String?  displayName = FirebaseDatabase.instance.reference().child("Clients").child(uid!).child("name") as String?;
 
-  static String? get uid => firebaseUser!.id;
 
+  Future<DatabaseEvent> getData() async{
+    var user = await FirebaseAuth.instance.currentUser;
+    var uid = firebaseUser!.id;
+    final dbRef = FirebaseDatabase.instance.reference().child('Clients').child(user!.uid).child("name");
+    return await dbRef.once();
+  }
 
   Future getName() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -84,6 +91,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
+
     return Drawer(
 
         child: ListView(
@@ -109,10 +117,12 @@ class _MyDrawerState extends State<MyDrawer> {
 
                             //Text
                           ),
+
+
                           Padding(
                             padding: const EdgeInsets.all(1.0),
                             child: Text(
-                             name,
+                             name.toString(),
                               style: TextStyle(fontSize: 15, color: Colors.black),
                             ),
                           ),

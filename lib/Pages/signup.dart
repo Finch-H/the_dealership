@@ -317,6 +317,7 @@ class SignUP extends StatelessWidget {
 
     firebaseUser=(await _firebaseAuth
         .createUserWithEmailAndPassword(
+
         email: emailTextEditingController.text,
         password: passwordTextEditingController.text
     ).catchError((errMsg){

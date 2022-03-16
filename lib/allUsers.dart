@@ -22,7 +22,7 @@ import 'configMaps.dart';
 
 
  }
-
+DatabaseReference db = FirebaseDatabase.instance.reference().child("Users");
 
 User? firebaseUser;
 
@@ -34,7 +34,7 @@ class Clients {
   String? key;
   String? id;
   String? email;
-  String? name;
+  String? name ;
   String? phone;
 
 
