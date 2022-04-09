@@ -112,7 +112,7 @@ return  Scaffold(
                                             Column(
                                                 children: [
                                                Text(
-                                                documents[index].get('Make'),
+                                                documents[index].get('Make')+ documents[index].get("Model"),
                                                 style: const TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold),
