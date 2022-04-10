@@ -658,7 +658,7 @@ class _addvehicleState extends State<addvehicle> {
         'CarClass':carClass,
         'CarSeater':Seater,
         'CarAirbag':Airbags,
-        'Images':url,
+
 
       });
       displayToast("Congratulation, your vehicle has been added", context);
