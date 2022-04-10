@@ -658,6 +658,7 @@ class _addvehicleState extends State<addvehicle> {
         'CarClass':carClass,
         'CarSeater':Seater,
         'CarAirbag':Airbags,
+        'Images':url,
 
       });
       displayToast("Congratulation, your vehicle has been added", context);
@@ -688,7 +689,10 @@ class _addvehicleState extends State<addvehicle> {
     }
   }
 
+
+
   Future uploadFile() async {
+
 
 
     int i = 1;
@@ -707,6 +711,12 @@ class _addvehicleState extends State<addvehicle> {
         });
       });
     }
+    String? downloadurl;
+
+    downloadurl=await ref?.getDownloadURL();
+
+    return downloadurl;
+
   }
 
   displayToast(String message,BuildContext context)
@@ -714,5 +724,7 @@ class _addvehicleState extends State<addvehicle> {
     Fluttertoast.showToast(msg: message);
 
   }
+
+
 
 }
