@@ -28,6 +28,7 @@ class _RentalPageState extends State<RentalPage> {
     bool isDarkMode = brightness ==
         Brightness.dark; //check if device is in dark or light mode
 
+    var item;
     return Scaffold(
       key: scaffoldKey,
       drawer: MyDrawer(),
