@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:the_dealership/widgets/bottom_nav_bar.dart';
 import 'package:the_dealership/widgets/bottom_nav_item.dart';
@@ -130,6 +131,16 @@ class _RentalPageState extends State<RentalPage> {
           child: SafeArea(
             child: ListView(
               children: [
+
+                Positioned.fill(
+                  child: CachedNetworkImage(
+                    placeholder: (context, _) => Container(
+                      color: Colors.black26,
+                    ),
+                    imageUrl: item.url,
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(
                     top: size.height * 0.04,
