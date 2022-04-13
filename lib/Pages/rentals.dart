@@ -8,6 +8,7 @@ import 'package:the_dealership/widgets/homePage/fleets.dart';
 import 'package:the_dealership/widgets/homePage/most_rented.dart';
 import 'package:the_dealership/widgets/homePage/top_brands.dart';
 import 'package:unicons/unicons.dart';
+import 'package:the_dealership/data/image_item.dart';
 
 class RentalPage extends StatefulWidget {
   const RentalPage({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _RentalPageState extends State<RentalPage> {
     bool isDarkMode = brightness ==
         Brightness.dark; //check if device is in dark or light mode
 
-    var item;
+
     return Scaffold(
       key: scaffoldKey,
       drawer: MyDrawer(),
@@ -134,15 +135,15 @@ class _RentalPageState extends State<RentalPage> {
             child: ListView(
               children: [
 
-                Positioned.fill(
-                  child: CachedNetworkImage(
-                    placeholder: (context, _) => Container(
-                      color: Colors.black26,
-                    ),
-                    imageUrl: item.url,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // Positioned.fill(
+                //   child: CachedNetworkImage(
+                //     placeholder: (context, _) => Container(
+                //       color: Colors.black26,
+                //     ),
+                //     imageUrl: item.url,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(
                     top: size.height * 0.04,
