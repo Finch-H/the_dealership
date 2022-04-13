@@ -35,6 +35,7 @@ class _RentalPageState extends State<RentalPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40.0), //appbar size
         child: AppBar(
+          elevation: 0,
           shadowColor: Colors.transparent,
 
           backgroundColor:
