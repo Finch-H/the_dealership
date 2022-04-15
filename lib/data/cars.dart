@@ -68,6 +68,8 @@ CollectionReference _NewVehicles = FirebaseFirestore.instance.collection('NewVeh
     }
   ];
 
+
+
 void getNewVehicles() async {
   final doc = await FirebaseFirestore.instance
       .collection('NewVehicles')

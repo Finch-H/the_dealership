@@ -711,12 +711,11 @@ class _addvehicleState extends State<addvehicle> {
         });
       });
     }
-    String? downloadurl;
-
-    downloadurl=await ref?.getDownloadURL();
-
-    return downloadurl;
-
+    final String downloadUrl =
+    await snapshot.ref.getDownloadURL();
+    await Firestore.instance
+        .collection("images")
+        .add({"url": downloadUrl, "name": imageName});
   }
 
   displayToast(String message,BuildContext context)
