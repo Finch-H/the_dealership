@@ -706,16 +706,13 @@ class _addvehicleState extends State<addvehicle> {
           .child('$make$model/${basename(img.path)}');
       await ref!.putFile(img).whenComplete(() async {
         await ref!.getDownloadURL().then((value) {
-          imgRef?.add({'url': value});
+          FirebaseFirestore.instance
+              .collection("images").add({'url': value,"name": make});
           i++;
         });
       });
     }
-    final String downloadUrl =
-    await snapshot.ref.getDownloadURL();
-    await Firestore.instance
-        .collection("images")
-        .add({"url": downloadUrl, "name": imageName});
+
   }
 
   displayToast(String message,BuildContext context)
