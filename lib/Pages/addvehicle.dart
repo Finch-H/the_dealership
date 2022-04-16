@@ -708,7 +708,7 @@ class _addvehicleState extends State<addvehicle> {
       await ref!.putFile(img).whenComplete(() async {
         await ref!.getDownloadURL().then((value) {
           FirebaseFirestore.instance
-              .collection("images").add({'url': value,"name": make});
+              .collection("images").doc(make).set({'url': value,"name": make});
           i++;
         });
       });
