@@ -659,6 +659,7 @@ class _addvehicleState extends State<addvehicle> {
         'CarClass':carClass,
         'CarSeater':Seater,
         'CarAirbag':Airbags,
+       // 'ImageList':imageFileList,
 
 
       });
@@ -707,8 +708,7 @@ class _addvehicleState extends State<addvehicle> {
           .child('$make$model/${basename(img.path)}');
       await ref!.putFile(img).whenComplete(() async {
         await ref!.getDownloadURL().then((value) {
-          FirebaseFirestore.instance
-              .collection("images").doc(make).set({'url': value,"name": make});
+          FirebaseFirestore.instance.collection("images").doc(make).set({'url': value,"name": make});
           i++;
         });
       });
