@@ -119,6 +119,7 @@ class _addvehicleState extends State<addvehicle> {
     DatabaseReference name = userRef;
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: const Text('Add to the Fleet or Rental'),
           backgroundColor: Colors.black,
         ),
