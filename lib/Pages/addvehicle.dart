@@ -592,7 +592,28 @@ class _addvehicleState extends State<addvehicle> {
           ),
         ));
   }
+  Future uploadFile() async {
 
+
+
+    int i = 1;
+
+    for (var img in _image) {
+      setState(() {
+        val = i / _image.length;
+      });
+      ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('$make$model/${basename(img.path)}');
+      await ref!.putFile(img).whenComplete(() async {
+        await ref!.getDownloadURL().then((value) {
+          FirebaseFirestore.instance.collection("images").doc(make).set({'url': value,"name": make});
+          i++;
+        });
+      });
+    }
+
+  }
   Future<void> AddVehiclestofirestore(BuildContext context) async {
 
     showDialog(
@@ -612,6 +633,7 @@ class _addvehicleState extends State<addvehicle> {
 
     User? user = await FirebaseAuth.instance.currentUser;
     if (_VehicledropDownValue  != 'Rental') {
+
       await FirebaseFirestore.instance.collection('Fleets').doc(make+model).set({
         'Vehicle Category': _VehicledropDownValue,
         'Region': _RegiondropDownValue,
@@ -629,7 +651,7 @@ class _addvehicleState extends State<addvehicle> {
         'CarClass':carClass,
         'CarSeater':Seater,
         'CarAirbag':Airbags,
-        //'ImageList':imageFileList,
+        // 'ImageList':Value,
 
       });
       // Navigator.push(
@@ -659,7 +681,7 @@ class _addvehicleState extends State<addvehicle> {
         'CarClass':carClass,
         'CarSeater':Seater,
         'CarAirbag':Airbags,
-       // 'ImageList':imageFileList,
+       //'ImageList':imageFileList,
 
 
       });
@@ -693,28 +715,7 @@ class _addvehicleState extends State<addvehicle> {
 
 
 
-  Future uploadFile() async {
 
-
-
-    int i = 1;
-
-    for (var img in _image) {
-      setState(() {
-        val = i / _image.length;
-      });
-      ref = firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('$make$model/${basename(img.path)}');
-      await ref!.putFile(img).whenComplete(() async {
-        await ref!.getDownloadURL().then((value) {
-          FirebaseFirestore.instance.collection("images").doc(make).set({'url': value,"name": make});
-          i++;
-        });
-      });
-    }
-
-  }
 
   displayToast(String message,BuildContext context)
   {
